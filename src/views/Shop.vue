@@ -1,0 +1,173 @@
+
+<template>
+  <div class="shop">
+    <div class="search">
+      <van-button
+        size="small"
+        style="margin-left:0.3rem;margin-top:0.4rem;"
+        round
+        icon="location-o"
+      >石家庄市</van-button>
+      <van-search
+        style="width:7.24rem;height:1.62rem;"
+        background="#f2f2f2"
+        v-model="value"
+        shape="round"
+        placeholder="请输入店铺名称"
+      />
+    </div>
+    <div class="box">
+      <div class="content" @click="jump">
+        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      </div>
+      <div class="btn">
+        <div class="font">
+          <span class="textt">唐山清鑫摄影店</span>
+          <span class="textb">河北省唐山市遵化市某某某街520号</span>
+        </div>
+        <div>
+          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
+          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="content" @click="jump">
+        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      </div>
+      <div class="btn">
+        <div class="font">
+          <span class="textt">唐山清鑫摄影店</span>
+          <span class="textb">河北省唐山市遵化市某某某街520号</span>
+        </div>
+        <div>
+          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
+          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="content" @click="jump">
+        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      </div>
+      <div class="btn">
+        <div class="font">
+          <span class="textt">唐山清鑫摄影店</span>
+          <span class="textb">河北省唐山市遵化市某某某街520号</span>
+        </div>
+        <div>
+          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
+          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="content" @click="jump">
+        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      </div>
+      <div class="btn">
+        <div class="font">
+          <span class="textt">唐山清鑫摄影店</span>
+          <span class="textb">河北省唐山市遵化市某某某街520号</span>
+        </div>
+        <div>
+          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
+          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="content" @click="jump">
+        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      </div>
+      <div class="btn">
+        <div class="font">
+          <span class="textt">唐山清鑫摄影店</span>
+          <span class="textb">河北省唐山市遵化市某某某街520号</span>
+        </div>
+        <div>
+          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
+          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      value: ''
+    }
+  },
+  methods: {
+    callPhone (phoneNumber) {
+      window.location.href = 'tel://' + phoneNumber
+    },
+    jump () {
+      this.$router.push('/shopDetails')
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.shop {
+  background-color: #f2f2f2;
+  // height: 100%;
+  // height: 110vh;
+  width: 100%;
+  overflow: hidden;
+  .search {
+    // background-color: yellow;
+    width: 100%;
+    height: 1.62rem;
+    display: flex;
+  }
+  .box {
+    background-color: #ffffff;
+    position: relative;
+    width: 10.62rem;
+    height: 3.6rem;
+    margin-left: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+  .content {
+    background-color: red;
+    position: absolute;
+    height: 2.6rem;
+    width: 2.6rem;
+    left: 0.5rem;
+    top: 0.5rem;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .btn {
+    position: absolute;
+    left: 3.4rem;
+    top: 0.5rem;
+  }
+  .font {
+    font-size: 0.44rem;
+    // background-color: #fff;
+  }
+  .textt {
+    display: inline-block;
+    font-size: 0.48rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: rgba(51, 51, 51, 1);
+  }
+  .textb {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-size: 0.4rem;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: rgba(153, 153, 153, 1);
+  }
+}
+</style>
