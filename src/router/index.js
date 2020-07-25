@@ -7,6 +7,9 @@ import ShopDetails from '../views/ShopDetails.vue'
 import SetList from '../views/SetList.vue'
 import ProductDetails from '../views/ProductDetails.vue'
 import Order from '../views/Order.vue'
+import Confirm from '../views/Confirm.vue'
+import Advance from '../views/Advance.vue' // 预约成功
+import Progress from '../views/Progress.vue' // 进度
 
 Vue.use(VueRouter)
 
@@ -15,7 +18,7 @@ const routes = [
     path: '/',
     name: 'Shop',
     component: Shop,
-    mata: {
+    meta: {
       title: '选择店铺'
     }
   },
@@ -23,31 +26,40 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
-    mata: {
+    meta: {
       title: '案例展示'
     }
   },
   {
     path: '/show',
     name: 'Show',
-    component: Show
+    component: Show,
+    meta: {
+      title: '案例展示'
+    }
   },
   {
     path: '/shopDetails',
     name: 'ShopDetails',
-    component: ShopDetails
+    component: ShopDetails,
+    meta: {
+      title: '唐山清鑫摄影'
+    }
   },
   {
     path: '/setList',
     name: 'SetList',
-    component: SetList
+    component: SetList,
+    meta: {
+      title: '套系列表'
+    }
   },
   // 产品详情
   {
     path: '/productDetails',
     name: 'ProductDetails',
     component: ProductDetails,
-    mata: {
+    meta: {
       title: '产品详情'
     }
   },
@@ -55,7 +67,37 @@ const routes = [
   {
     path: '/order',
     name: 'Order',
-    component: Order
+    component: Order,
+    meta: {
+      title: '我的订单'
+    }
+  },
+  // 确认预约
+  {
+    path: '/confirm',
+    name: 'Confirm',
+    component: Confirm,
+    meta: {
+      title: '确认预约'
+    }
+  },
+  // 预约成功
+  {
+    path: '/advance',
+    name: 'Advance',
+    component: Advance,
+    meta: {
+      title: '预约成功'
+    }
+  },
+  // 进度
+  {
+    path: '/progress',
+    name: 'Progress',
+    component: Progress,
+    meta: {
+      title: '进度'
+    }
   }
 ]
 

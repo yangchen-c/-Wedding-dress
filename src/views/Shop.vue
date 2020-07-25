@@ -4,89 +4,32 @@
     <div class="search">
       <van-button
         size="small"
-        style="margin-left:0.3rem;margin-top:0.4rem;"
+        style="margin-left:0.3rem;margin-top:0.3rem;width:3rem;height:0.99rem;"
         round
         icon="location-o"
       >石家庄市</van-button>
       <van-search
-        style="width:7.24rem;height:1.62rem;"
+        style="width:7.24rem;height:1.62rem;margin-left:0.1rem;"
         background="#f2f2f2"
-        v-model="value"
+        v-model="name"
         shape="round"
         placeholder="请输入店铺名称"
+        @search="onSearch"
       />
     </div>
-    <div class="box">
+    <!-- <div>{{storeData}}</div> -->
+    <div class="box" v-for="(item,i) in storeData" :key="i">
       <div class="content" @click="jump">
-        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
+        <!-- <img src="https://img.yzcdn.cn/vant/cat.jpeg" /> -->
+        <img :src="item.photo" />
       </div>
       <div class="btn">
         <div class="font">
-          <span class="textt">唐山清鑫摄影店</span>
-          <span class="textb">河北省唐山市遵化市某某某街520号</span>
+          <span class="textt">{{item.name}}</span>
+          <span class="textb">{{item.address}}</span>
         </div>
         <div>
-          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
-          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
-        </div>
-      </div>
-    </div>
-    <div class="box">
-      <div class="content" @click="jump">
-        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      </div>
-      <div class="btn">
-        <div class="font">
-          <span class="textt">唐山清鑫摄影店</span>
-          <span class="textb">河北省唐山市遵化市某某某街520号</span>
-        </div>
-        <div>
-          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
-          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
-        </div>
-      </div>
-    </div>
-    <div class="box">
-      <div class="content" @click="jump">
-        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      </div>
-      <div class="btn">
-        <div class="font">
-          <span class="textt">唐山清鑫摄影店</span>
-          <span class="textb">河北省唐山市遵化市某某某街520号</span>
-        </div>
-        <div>
-          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
-          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
-        </div>
-      </div>
-    </div>
-    <div class="box">
-      <div class="content" @click="jump">
-        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      </div>
-      <div class="btn">
-        <div class="font">
-          <span class="textt">唐山清鑫摄影店</span>
-          <span class="textb">河北省唐山市遵化市某某某街520号</span>
-        </div>
-        <div>
-          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
-          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
-        </div>
-      </div>
-    </div>
-    <div class="box">
-      <div class="content" @click="jump">
-        <img src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      </div>
-      <div class="btn">
-        <div class="font">
-          <span class="textt">唐山清鑫摄影店</span>
-          <span class="textb">河北省唐山市遵化市某某某街520号</span>
-        </div>
-        <div>
-          <van-button @click="callPhone(Phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
+          <van-button @click="callPhone(item.phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
           <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
         </div>
       </div>
@@ -95,11 +38,20 @@
 </template>
 
 <script>
+// import axios from '../../assets/js/baseaxios'
+import axios from '../assets/js/baseaxios'
+
 export default {
   data () {
     return {
-      value: ''
+      value: '',
+      Phone: '',
+      storeData: [],
+      name: ''
     }
+  },
+  mounted () {
+    this.getData()
   },
   methods: {
     callPhone (phoneNumber) {
@@ -107,6 +59,25 @@ export default {
     },
     jump () {
       this.$router.push('/shopDetails')
+    },
+    onSearch () {
+      this.getData()
+    },
+    getData () {
+      axios
+        .get('/store', {
+          params: {
+            name: this.name
+          }
+        })
+        .then((res) => {
+          console.log(res)
+          // if (res.success) {
+          this.storeData = res.data
+          // } else {
+          //   // this.$message.warning(res.msg)
+          // }
+        })
     }
   }
 }
@@ -116,7 +87,7 @@ export default {
 .shop {
   background-color: #f2f2f2;
   // height: 100%;
-  // height: 110vh;
+  height: 100vh;
   width: 100%;
   overflow: hidden;
   .search {
@@ -148,26 +119,29 @@ export default {
   .btn {
     position: absolute;
     left: 3.4rem;
-    top: 0.5rem;
+    top: 0.4rem;
   }
   .font {
     font-size: 0.44rem;
     // background-color: #fff;
   }
   .textt {
-    display: inline-block;
+    display: block;
     font-size: 0.48rem;
     font-family: PingFang SC;
     font-weight: bold;
     color: rgba(51, 51, 51, 1);
   }
   .textb {
-    display: inline-block;
+    display: block;
     margin-top: 0.3rem;
     font-size: 0.4rem;
     font-family: PingFang SC;
     font-weight: 500;
     color: rgba(153, 153, 153, 1);
+  }
+  .van-search__content {
+    background-color: #fff;
   }
 }
 </style>

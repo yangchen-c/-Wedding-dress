@@ -58,7 +58,7 @@
               <span class="textt">【格蕾丝系列】三天拍摄+样片级团队 一对一服务</span>
               <span class="textb">￥6000</span>
               <span class="foot">
-                <span style="color:#FF8400;">查看进度 ></span>
+                <span @click="look" style="color:#FF8400;">查看进度 ></span>
               </span>
             </div>
           </div>
@@ -78,7 +78,7 @@
               <span class="textt">【格蕾丝系列】三天拍摄+样片级团队 一对一服务</span>
               <span class="textb">￥6000</span>
               <span class="foot">
-                <span style="color:#FF8400;">查看进度 ></span>
+                <span @click="look" style="color:#FF8400;">查看进度 ></span>
               </span>
             </div>
           </div>
@@ -117,6 +117,9 @@ export default {
     },
     jump () {
       this.$router.push('/shopDetails')
+    },
+    look () {
+      this.$router.push('/progress')
     }
   }
 }
