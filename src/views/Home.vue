@@ -1,62 +1,14 @@
 <template>
   <div class="home">
     <div class="top">
-      <div class="boxl">
-        <div class="img" @click="jump">
-          <van-image src="https://img.yzcdn.cn/vant/apple-1.jpg" />
+      <div class="boxl" v-for="(item,i) in storeData" :key="i">
+        <div class="img" @click="jump(item.id)">
+          <!-- <van-image src="https://img.yzcdn.cn/vant/apple-1.jpg" /> -->
+          <van-image :src="item.cover" />
         </div>
         <div class="font">
-          <span class="textt">杨小羊先生和李鹏飞女士恭喜发财</span>
-          <span class="textb">2020/06/30</span>
-        </div>
-      </div>
-      <div class="boxl">
-        <div class="img" @click="jump">
-          <van-image src="https://img.yzcdn.cn/vant/apple-1.jpg" />
-        </div>
-        <div class="font">
-          <span class="textt">杨小羊先生和李鹏飞女士恭喜发财</span>
-          <span class="textb">2020/06/30</span>
-        </div>
-      </div>
-    </div>
-    <div class="top">
-      <div class="boxl">
-        <div class="img" @click="jump">
-          <van-image src="https://img.yzcdn.cn/vant/apple-1.jpg" />
-        </div>
-        <div class="font">
-          <span class="textt">杨小羊先生和李鹏飞女士恭喜发财</span>
-          <span class="textb">2020/06/30</span>
-        </div>
-      </div>
-      <div class="boxl">
-        <div class="img" @click="jump">
-          <van-image src="https://img.yzcdn.cn/vant/apple-1.jpg" />
-        </div>
-        <div class="font">
-          <span class="textt">杨小羊先生和李鹏飞女士恭喜发财</span>
-          <span class="textb">2020/06/30</span>
-        </div>
-      </div>
-    </div>
-    <div class="top">
-      <div class="boxl">
-        <div class="img" @click="jump">
-          <van-image src="https://img.yzcdn.cn/vant/apple-1.jpg" />
-        </div>
-        <div class="font">
-          <span class="textt">杨小羊先生和李鹏飞女士恭喜发财</span>
-          <span class="textb">2020/06/30</span>
-        </div>
-      </div>
-      <div class="boxl">
-        <div class="img" @click="jump">
-          <van-image src="https://img.yzcdn.cn/vant/apple-1.jpg" />
-        </div>
-        <div class="font">
-          <span class="textt">杨小羊先生和李鹏飞女士恭喜发财</span>
-          <span class="textb">2020/06/30</span>
+          <span class="textt">{{item.name}}</span>
+          <span class="textb">{{item.createTime.substring(0,10)}}</span>
         </div>
       </div>
     </div>
@@ -64,13 +16,34 @@
 </template>
 
 <script>
+import axios from '../assets/js/baseaxios'
+
 export default {
   data () {
-    return {}
+    return {
+      storeData: [],
+      id: ''
+    }
+  },
+  mounted () {
+    this.getData()
   },
   methods: {
-    jump () {
-      this.$router.push('/show')
+    jump (id) {
+      this.$router.push({ path: '/show', query: { id: id } })
+      // this.$router.push({ query: { id: id } })
+      // console.log(id)
+    },
+    getData () {
+      axios
+        .get('/case', {
+          params: {
+            name: this.name
+          }
+        })
+        .then((res) => {
+          this.storeData = res.data
+        })
     }
   }
 }
@@ -79,14 +52,17 @@ export default {
 <style lang="less" scoped>
 .home {
   background-color: #f2f2f2;
+  height: 100vh;
   .top {
-    display: flex;
-    padding-top: 0.3rem;
+    // display: flex;
+    // padding-top: 0.3rem;
   }
   .boxl {
+    display: inline-block;
     width: 5.17rem;
     height: 6.45rem;
     margin-left: 0.3rem;
+    margin-top: 0.3rem;
   }
   .img {
     background-color: #fff;

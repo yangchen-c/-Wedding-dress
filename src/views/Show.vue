@@ -1,24 +1,15 @@
 <template>
   <div class="show">
     <div class="font">
-      <span class="textt">杨小羊先生和李鹏飞女士恭喜发财</span>
-      <span class="textm">2020/06/30</span>
-      <span class="textb">月老牵线，喜结良缘，今日佳节，亲朋欢聚，共祝新人：新婚快乐，生活幸福，早生贵子，百年好合！</span>
+      <span class="textt">{{storeData[0].name}}</span>
+      <span class="textm" v-if="storeData[0].createTime">{{storeData[0].createTime.substring(0,10)}}</span>
+      <span class="textb">{{storeData[0].infoTitle}}</span>
     </div>
     <div class="img">
       <div class="imgt">
+        <!-- https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg,https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg -->
         <img
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595481735089&di=cc9867c72fb6630df8baae33b04fb517&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Flarge%2F85ccde71gw1faskt9i55sj20hn0eeq3a.jpg"
-        />
-      </div>
-      <div class="imgt">
-        <img
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595481735089&di=cc9867c72fb6630df8baae33b04fb517&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Flarge%2F85ccde71gw1faskt9i55sj20hn0eeq3a.jpg"
-        />
-      </div>
-      <div class="imgt">
-        <img
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595481735089&di=cc9867c72fb6630df8baae33b04fb517&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Flarge%2F85ccde71gw1faskt9i55sj20hn0eeq3a.jpg"
+          src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"
         />
       </div>
     </div>
@@ -26,7 +17,42 @@
 </template>
 
 <script>
-export default {}
+import axios from '../assets/js/baseaxios'
+
+export default {
+  data () {
+    return {
+      storeData: [{ name: '' }]
+    }
+  },
+  mounted () {
+    this.getData()
+  },
+  methods: {
+    getData () {
+      axios
+        .get('/case', {
+          params: {
+            id: this.$route.query.id
+          }
+        })
+        .then((res) => {
+          this.storeData = res.data
+        })
+    }
+    // text () {
+    //   axios
+    //     .get('/comboClassify', {
+    //       params: {
+    //         // id: this.$route.query.id
+    //       }
+    //     })
+    //     .then((res) => {
+    //       // this.storeData = res.data
+    //     })
+    // }
+  }
+}
 </script>
 
 <style lang="less" scoped>
