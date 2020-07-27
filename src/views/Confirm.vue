@@ -4,18 +4,18 @@
       <div class="bgt">待预约</div>
       <div class="bgb">请您在15分钟内完成预约</div>
     </div>
-    <div class="card">
+    <div class="card" v-for="(item,i) in storeData" :key="i">
       <div class="btn">
         <van-icon name="shop" size="0.45rem" />
-        <span style="margin-left:0.3rem;">唐山清鑫摄影店 ></span>
+        <span style="margin-left:0.3rem;">{{item.store.name}} ></span>
       </div>
       <div class="content">
         <div class="img">
-          <img src="https://img.yzcdn.cn/vant/ipad.jpeg" alt />
+          <img :src="item.store.photo" alt />
         </div>
         <div class="text">
-          <span class="textt">【格蕾丝系列】三天拍摄+样片级团队 一对一服务</span>
-          <span class="textb">￥6000</span>
+          <span class="textt">{{item.infoTitle}}</span>
+          <span class="textb">￥{{item.price}}</span>
         </div>
       </div>
     </div>
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import axios from '../assets/js/baseaxios'
+
 export default {
   data () {
     return {
@@ -70,10 +72,24 @@ export default {
       wechat: ''
     }
   },
+  mounted () {
+    this.getData()
+  },
   methods: {
     onSubmit (values) {
       console.log('submit', values)
       this.$router.push('./advance')
+    },
+    getData () {
+      axios
+        .get('/combo', {
+          params: {
+            id: this.$route.query.id
+          }
+        })
+        .then((res) => {
+          this.storeData = res.data
+        })
     }
   }
 }
@@ -148,6 +164,7 @@ export default {
     margin-left: 0.26rem;
     padding-right: 0.2rem;
     margin-top: 0.5rem;
+    width: 7.08rem;
   }
   .textb {
     display: block;

@@ -6,11 +6,8 @@
       <span class="textb">{{storeData[0].infoTitle}}</span>
     </div>
     <div class="img">
-      <div class="imgt">
-        <!-- https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg,https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg -->
-        <img
-          src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"
-        />
+      <div class="imgt" v-for="(item,i) in images" :key="i">
+        <img :src="item" />
       </div>
     </div>
   </div>
@@ -22,7 +19,8 @@ import axios from '../assets/js/baseaxios'
 export default {
   data () {
     return {
-      storeData: [{ name: '' }]
+      storeData: [{ name: '' }],
+      images: []
     }
   },
   mounted () {
@@ -38,19 +36,9 @@ export default {
         })
         .then((res) => {
           this.storeData = res.data
+          this.images = res.data[0].infoPhoto.split(',')
         })
     }
-    // text () {
-    //   axios
-    //     .get('/comboClassify', {
-    //       params: {
-    //         // id: this.$route.query.id
-    //       }
-    //     })
-    //     .then((res) => {
-    //       // this.storeData = res.data
-    //     })
-    // }
   }
 }
 </script>

@@ -6,45 +6,24 @@
         <van-image round width="1.32rem" height="1.32rem" src="https://img.yzcdn.cn/vant/cat.jpeg" />
       </div>
       <div class="btn">
+        <!-- color="#f2f2f4" -->
         <van-button style="width:9.03rem;margin-left:0.3rem;" round icon="shop">唐山清鑫摄影店 ></van-button>
       </div>
     </div>
     <div class="content">
-      <div class="img1">
-        <span class="textt">婚纱摄影拍摄</span>
-        <span class="textm">一生一次，一生精彩</span>
-        <span class="textb" @click="jump">
+      <div class="img1" v-for="(item,i) in storeData" :key="i">
+        <div class="lower" @click="jump">
+          <img :src="item.background" alt />
+        </div>
+        <div class="upper">
+          <span class="textt">{{item.name}}</span>
+          <span class="textm">{{item.paper}}</span>
+        </div>
+        <!-- <span class="textb" @click="jump">
           了解详情
           <img src="../assets/right.png" alt />
         </span>
-        <span class="soldd"></span>
-      </div>
-      <div class="img2">
-        <span class="textt">宝宝摄影拍摄</span>
-        <span class="textm">留住美丽，从小照起</span>
-        <span class="textb" @click="jump">
-          了解详情
-          <img src="../assets/right.png" alt />
-        </span>
-        <span class="soldd"></span>
-      </div>
-      <div class="img3">
-        <span class="textt">写真摄影拍摄</span>
-        <span class="textm">一个POSE，一生回忆</span>
-        <span class="textb" @click="jump">
-          了解详情
-          <img src="../assets/right.png" alt />
-        </span>
-        <span class="soldd"></span>
-      </div>
-      <div class="img4">
-        <span class="textt">全家福摄影拍摄</span>
-        <span class="textm">和睦一家，幸福美满</span>
-        <span class="textb" @click="jump">
-          了解详情
-          <img src="../assets/right.png" alt />
-        </span>
-        <span class="soldd"></span>
+        <span class="soldd"></span>-->
       </div>
     </div>
     <div class="foot">
@@ -57,19 +36,32 @@
 </template>
 
 <script>
+import axios from '../assets/js/baseaxios'
+
 export default {
   data () {
     return {
-      active: 0
-      // icon: {
-      //   active: 'https://img.yzcdn.cn/vant/user-active.png',
-      //   inactive: 'https://img.yzcdn.cn/vant/user-inactive.png'
-      // }
+      active: 0,
+      storeData: []
     }
+  },
+  mounted () {
+    this.getData()
   },
   methods: {
     jump () {
       this.$router.push('/setList')
+    },
+    getData () {
+      axios
+        .get('/comboClassify', {
+          params: {
+            // id: this.$route.query.id
+          }
+        })
+        .then((res) => {
+          this.storeData = res.data
+        })
     }
   }
 }
@@ -78,7 +70,7 @@ export default {
 <style lang="less" scoped>
 .shopdetail {
   font-size: 0.44rem;
-  height: 138vh;
+  // height: 138vh;
   span {
     display: block;
     margin-left: 0.81rem;
@@ -99,15 +91,33 @@ export default {
   }
   .content {
     margin-left: 0.3rem;
+    // background-color: green;
   }
   .img1 {
-    background-image: url("../assets/1.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    // background-image: url("../assets/1.png");
+    // background-repeat: no-repeat;
+    // background-color: green;
+
+    // background-size: 100% 100%;
+    // width: 10.65rem;
+    // height: 3.8rem;
+    // margin-bottom: 0.3rem;
+    // padding-top: 0.79rem;
+    position: relative;
+  }
+  .lower {
+    position: absolute;
+    z-index: -1;
     width: 10.65rem;
     height: 3.8rem;
-    margin-bottom: 0.3rem;
-    padding-top: 0.79rem;
+  }
+  .lower img {
+    width: 100%;
+    height: 100%;
+  }
+  .upper {
+    position: absolute;
+    top: 0.8rem;
   }
   .textt {
     font-size: 0.48rem;
@@ -143,32 +153,32 @@ export default {
     background-color: #fff;
     margin-top: 0.17rem;
   }
-  .img2 {
-    background-image: url("../assets/2.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width: 10.65rem;
-    height: 3.8rem;
-    padding-top: 0.79rem;
-    margin-bottom: 0.3rem;
-  }
-  .img3 {
-    background-image: url("../assets/3.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width: 10.65rem;
-    height: 3.8rem;
-    padding-top: 0.79rem;
-    margin-bottom: 0.3rem;
-  }
-  .img4 {
-    background-image: url("../assets/4.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width: 10.65rem;
-    height: 3.8rem;
-    padding-top: 0.79rem;
-    margin-bottom: 0.3rem;
-  }
+  // .img2 {
+  //   background-image: url("../assets/2.png");
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  //   width: 10.65rem;
+  //   height: 3.8rem;
+  //   padding-top: 0.79rem;
+  //   margin-bottom: 0.3rem;
+  // }
+  // .img3 {
+  //   background-image: url("../assets/3.png");
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  //   width: 10.65rem;
+  //   height: 3.8rem;
+  //   padding-top: 0.79rem;
+  //   margin-bottom: 0.3rem;
+  // }
+  // .img4 {
+  //   background-image: url("../assets/4.png");
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  //   width: 10.65rem;
+  //   height: 3.8rem;
+  //   padding-top: 0.79rem;
+  //   margin-bottom: 0.3rem;
+  // }
 }
 </style>

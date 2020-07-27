@@ -61,7 +61,7 @@ $http.interceptors.response.use(
     // 请求成功返回response.data
     if ((code >= 200 && code < 300) || code === 304) {
       if (response.data.success === false) {
-        Notify.error(response.data.msg)
+        Notify(response.data.msg)
         return Promise.reject(response)
       }
       return Promise.resolve(response.data)
@@ -73,10 +73,10 @@ $http.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 404:
-          Notify.error('网络请求不存在')
+          Notify('网络请求不存在')
           break
         default:
-          Notify.error('服务器异常，请稍后重试')
+          Notify('服务器异常，请稍后重试')
       }
     } else {
       // 请求超时或者网络有问题
