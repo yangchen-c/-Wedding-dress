@@ -52,7 +52,7 @@ export default {
       axios
         .get('/combo', {
           params: {
-            // id: this.$route.query.id
+            id: this.$route.query.id
           }
         })
         .then((res) => {

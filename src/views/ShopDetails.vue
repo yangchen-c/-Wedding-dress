@@ -11,8 +11,8 @@
       </div>
     </div>
     <div class="content">
-      <div class="img1" v-for="(item,i) in storeData" :key="i">
-        <div class="lower" @click="jump">
+      <div class="img1" v-for="(item,i) in storeData" :key="i" @click="jump(item.id)">
+        <div class="lower">
           <img :src="item.background" alt />
         </div>
         <div class="upper">
@@ -49,8 +49,9 @@ export default {
     this.getData()
   },
   methods: {
-    jump () {
-      this.$router.push('/setList')
+    jump (id) {
+      // this.$router.push('/setList')
+      this.$router.push({ path: '/setList', query: { id: id } })
     },
     getData () {
       axios
@@ -99,11 +100,13 @@ export default {
     // background-color: green;
 
     // background-size: 100% 100%;
-    // width: 10.65rem;
-    // height: 3.8rem;
+    width: 10.65rem;
+    height: 3.8rem;
     // margin-bottom: 0.3rem;
     // padding-top: 0.79rem;
     position: relative;
+    // background-color: green;
+    margin-bottom: 0.3rem;
   }
   .lower {
     position: absolute;
