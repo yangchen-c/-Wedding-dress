@@ -7,7 +7,9 @@
         style="margin-left:0.3rem;margin-top:0.3rem;width:3rem;height:0.99rem;"
         round
         icon="location-o"
-      >石家庄市</van-button>
+        @click="cityOpen"
+      >{{city}}</van-button>
+      <van-popup v-model="show" round position="bottom" :style="{ height: '30%' }" />
       <van-search
         style="width:7.24rem;height:1.62rem;margin-left:0.1rem;"
         background="#f2f2f2"
@@ -30,7 +32,13 @@
         </div>
         <div>
           <van-button @click="callPhone(item.phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
-          <van-button style="margin-left:0.3rem" icon="share" size="small" type="info">导航到店</van-button>
+          <van-button
+            style="margin-left:0.3rem"
+            icon="share"
+            size="small"
+            type="info"
+            @click="goStore(item)"
+          >导航到店</van-button>
         </div>
       </div>
     </div>
@@ -44,16 +52,29 @@ import axios from '../assets/js/baseaxios'
 export default {
   data () {
     return {
+      city: '唐山市',
       value: '',
       Phone: '',
       storeData: [],
-      name: ''
+      name: '',
+      longitude: '',
+      latitude: '',
+      token:
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwicm9sZSI6IjAiLCJpc3MiOiJxaW5nZ3hpbnlvdXBpbiIsImV4cCI6MTU5NzM2ODM1MiwiaWF0IjoxNTk2NzYzNTUyLCJ1c2VybmFtZSI6ImFkbWluIn0.WdSo9o7zFylgIwwtEfz9yQzyI-UmY5jQ9UZDRCgb22PG-TgwRBSivcKJqv-8gUWugGWxmotz_yaDQ-kwGmvzAw'
     }
   },
   mounted () {
     this.getData()
   },
   methods: {
+    goStore (val) {
+      console.log(val.longitude)
+      console.log(val.latitude)
+      // window.location.href =
+      //  ' http://api.map.baidu.com/geocoder?location=39.990912172420714,116.32715863448607&coord_type=gcj02&output=html&src=webapp.baidu.openAPIdemo'
+      window.location.href =
+      `http://api.map.baidu.com/geocoder?location=${val.latitude},${val.longitude}&coord_type=bd09ll&output=html&src=webapp.baidu.openAPIdemo`
+    },
     callPhone (phoneNumber) {
       window.location.href = 'tel://' + phoneNumber
     },
@@ -68,12 +89,15 @@ export default {
         .get('/store', {
           params: {
             name: this.name
-          }
+          },
+          headers: { token: this.token }
         })
         .then((res) => {
           console.log(res)
           // if (res.success) {
           this.storeData = res.data
+          // this.longitude = res.data.latitude
+          // this.latitude = res.data.latitude
           // } else {
           //   // this.$message.warning(res.msg)
           // }
@@ -87,7 +111,7 @@ export default {
 .shop {
   background-color: #f2f2f2;
   // height: 100%;
-  height: 100vh;
+  // height: 100vh;
   width: 100%;
   overflow: hidden;
   .search {
