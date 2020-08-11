@@ -1,65 +1,69 @@
 
 <template>
-  <div class="shop">
-    <div class="search">
-      <van-button
-        size="small"
-        style="margin-left:0.3rem;margin-top:0.3rem;width:4rem;height:0.99rem;"
-        round
-        icon="location-o"
-        @click="cityOpen"
-      >{{city}}</van-button>
-      <van-popup v-model="show" round position="bottom" :style="{ height: '50%' }">
-        <van-area :area-list="areaList" @confirm="onAreaConfirm" @cancel="bindCancel" />
-      </van-popup>
+  <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+    <div class="shop">
+      <div class="search">
+        <van-button
+          size="small"
+          style="margin-left:0.3rem;margin-top:0.3rem;width:4rem;height:0.99rem;"
+          round
+          icon="location-o"
+          @click="cityOpen"
+        >{{city}}</van-button>
+        <van-popup v-model="show" round position="bottom" :style="{ height: '50%' }">
+          <van-area :area-list="areaList" @confirm="onAreaConfirm" @cancel="bindCancel" />
+        </van-popup>
 
-      <van-search
-        style="width:7.24rem;height:1.62rem;margin-left:0.1rem;"
-        background="#f2f2f2"
-        v-model="name"
-        shape="round"
-        placeholder="请输入店铺名称"
-        @search="onSearch"
-      />
-    </div>
-    <!-- <div>{{storeData}}</div> -->
-    <div class="box" v-for="(item,i) in storeData" :key="i">
-      <div class="content" @click="jump">
-        <!-- <img src="https://img.yzcdn.cn/vant/cat.jpeg" /> -->
-        <img :src="item.photo" />
+        <van-search
+          style="width:7.24rem;height:1.62rem;margin-left:0.1rem;"
+          background="#f2f2f2"
+          v-model="name"
+          shape="round"
+          placeholder="请输入店铺名称"
+          @search="onSearch"
+        />
       </div>
-      <div class="btn">
-        <div class="font">
-          <span class="textt">{{item.name}}</span>
-          <span class="textb">{{item.address}}</span>
+      <!-- <div>{{storeData}}</div> -->
+      <div class="box" v-for="(item,i) in storeData" :key="i">
+        <div class="content" @click="jump">
+          <!-- <img src="https://img.yzcdn.cn/vant/cat.jpeg" /> -->
+          <img :src="item.photo" />
         </div>
-        <div>
-          <van-button @click="callPhone(item.phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
-          <van-button
-            style="margin-left:0.3rem"
-            icon="share"
-            size="small"
-            type="info"
-            @click="goStore(item)"
-          >导航到店</van-button>
+        <div class="btn">
+          <div class="font">
+            <span class="textt">{{item.name}}</span>
+            <span class="textb">{{item.address}}</span>
+          </div>
+          <div>
+            <van-button @click="callPhone(item.phone)" icon="phone" size="small" type="warning">拨打电话</van-button>
+            <van-button
+              style="margin-left:0.3rem"
+              icon="share"
+              size="small"
+              type="info"
+              @click="goStore(item)"
+            >导航到店</van-button>
+          </div>
         </div>
       </div>
+      <div class="non" v-if="storeData==''">
+        <img src="../assets/none.png" alt />
+        <div class="nonFont">暂无数据</div>
+      </div>
     </div>
-    <div class="non" v-if="storeData==''">
-      <img src="../assets/none.png" alt />
-      <div class="nonFont">暂无数据</div>
-    </div>
-  </div>
+  </van-pull-refresh>
 </template>
 
 <script>
 // import axios from '../../assets/js/baseaxios'
 import axios from '../assets/js/baseaxios'
 import AeraInfo from '../assets/js/area'
+import { Toast } from 'vant'
 
 export default {
   data () {
     return {
+      isLoading: false,
       areaList: AeraInfo, // 引用地区信息
       valueArea: '', // 地区值
       arrArea: [], // 存放地区数组
@@ -79,6 +83,14 @@ export default {
     this.getData()
   },
   methods: {
+    // 下拉刷新
+    onRefresh () {
+      setTimeout(() => {
+        Toast('刷新成功')
+        this.isLoading = false
+        this.getData()
+      }, 1000)
+    },
     cityOpen () {
       this.show = true
     },
