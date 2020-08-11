@@ -22,7 +22,9 @@ export default {
   data () {
     return {
       storeData: [],
-      id: ''
+      id: '',
+      token:
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwicm9sZSI6IjAiLCJpc3MiOiJxaW5nZ3hpbnlvdXBpbiIsImV4cCI6MTU5NzM2ODM1MiwiaWF0IjoxNTk2NzYzNTUyLCJ1c2VybmFtZSI6ImFkbWluIn0.WdSo9o7zFylgIwwtEfz9yQzyI-UmY5jQ9UZDRCgb22PG-TgwRBSivcKJqv-8gUWugGWxmotz_yaDQ-kwGmvzAw'
     }
   },
   mounted () {
@@ -39,7 +41,8 @@ export default {
         .get('/case', {
           params: {
             name: this.name
-          }
+          },
+          headers: { token: this.token }
         })
         .then((res) => {
           this.storeData = res.data

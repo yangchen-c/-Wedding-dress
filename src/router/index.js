@@ -10,6 +10,7 @@ import Order from '../views/Order.vue'
 import Confirm from '../views/Confirm.vue'
 import Advance from '../views/Advance.vue' // 预约成功
 import Progress from '../views/Progress.vue' // 进度
+import Appointment from '../views/Appointment.vue' // 电子预约单
 
 Vue.use(VueRouter)
 
@@ -97,6 +98,15 @@ const routes = [
     component: Progress,
     meta: {
       title: '进度'
+    }
+  },
+  // 电子预约单
+  {
+    path: '/appointment',
+    name: 'Appointment',
+    component: Appointment,
+    meta: {
+      title: '电子预约单'
     }
   }
 ]

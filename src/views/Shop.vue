@@ -4,12 +4,15 @@
     <div class="search">
       <van-button
         size="small"
-        style="margin-left:0.3rem;margin-top:0.3rem;width:3rem;height:0.99rem;"
+        style="margin-left:0.3rem;margin-top:0.3rem;width:4rem;height:0.99rem;"
         round
         icon="location-o"
         @click="cityOpen"
       >{{city}}</van-button>
-      <van-popup v-model="show" round position="bottom" :style="{ height: '30%' }" />
+      <van-popup v-model="show" round position="bottom" :style="{ height: '50%' }">
+        <van-area :area-list="areaList" @confirm="onAreaConfirm" @cancel="bindCancel" />
+      </van-popup>
+
       <van-search
         style="width:7.24rem;height:1.62rem;margin-left:0.1rem;"
         background="#f2f2f2"
@@ -42,17 +45,26 @@
         </div>
       </div>
     </div>
+    <div class="non" v-if="storeData==''">
+      <img src="../assets/none.png" alt />
+      <div class="nonFont">暂无数据</div>
+    </div>
   </div>
 </template>
 
 <script>
 // import axios from '../../assets/js/baseaxios'
 import axios from '../assets/js/baseaxios'
+import AeraInfo from '../assets/js/area'
 
 export default {
   data () {
     return {
-      city: '唐山市',
+      areaList: AeraInfo, // 引用地区信息
+      valueArea: '', // 地区值
+      arrArea: [], // 存放地区数组
+      show: false,
+      city: '石家庄',
       value: '',
       Phone: '',
       storeData: [],
@@ -67,13 +79,29 @@ export default {
     this.getData()
   },
   methods: {
+    cityOpen () {
+      this.show = true
+    },
+    bindCancel () {
+      this.show = false
+    },
+    // 地区选择
+    onAreaConfirm (val) {
+      console.log(val)
+      this.show = false
+      this.arrArea = val
+      var addrInfo = val[1].name + '-' + val[2].name
+      // var addrInfo = val[0].name + '-' + val[1].name + '-' + val[2].name
+      this.city = addrInfo
+      // this.valueArea = addrInfo
+    },
+
     goStore (val) {
       console.log(val.longitude)
       console.log(val.latitude)
       // window.location.href =
       //  ' http://api.map.baidu.com/geocoder?location=39.990912172420714,116.32715863448607&coord_type=gcj02&output=html&src=webapp.baidu.openAPIdemo'
-      window.location.href =
-      `http://api.map.baidu.com/geocoder?location=${val.latitude},${val.longitude}&coord_type=bd09ll&output=html&src=webapp.baidu.openAPIdemo`
+      window.location.href = `http://api.map.baidu.com/geocoder?location=${val.latitude},${val.longitude}&coord_type=bd09ll&output=html&src=webapp.baidu.openAPIdemo`
     },
     callPhone (phoneNumber) {
       window.location.href = 'tel://' + phoneNumber
@@ -166,6 +194,20 @@ export default {
   }
   .van-search__content {
     background-color: #fff;
+  }
+  .non {
+    width: 3.89rem;
+    height: 3.03rem;
+    margin-left: 3.68rem;
+    margin-top: 7.92rem;
+    margin-bottom: 9rem;
+  }
+  .nonFont {
+    margin-left: 1rem;
+    font-size: 0.54rem;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 1);
   }
 }
 </style>

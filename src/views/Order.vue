@@ -48,7 +48,7 @@
           <div class="btn1">
             <van-icon name="shop" />
             <span @click="jump" style="margin-left:0.3rem;">唐山清鑫摄影店 ></span>
-            <span style="color:#259AE4;margin-left:3.1rem">电子预约单</span>
+            <span style="color:#259AE4;margin-left:3.1rem" @click="goStaff">电子预约单</span>
           </div>
           <div class="content">
             <div class="img">
@@ -68,7 +68,7 @@
           <div class="btn1">
             <van-icon name="shop" />
             <span @click="jump" style="margin-left:0.3rem;">杨小羊摄影店 ></span>
-            <span style="color:#259AE4;margin-left:3.1rem">电子预约单</span>
+            <span style="color:#259AE4;margin-left:3.1rem" @click="goStaff">电子预约单</span>
           </div>
           <div class="content">
             <div class="img">
@@ -117,6 +117,9 @@ export default {
     },
     jump () {
       this.$router.push('/shopDetails')
+    },
+    goStaff () {
+      this.$router.push('/appointment')
     },
     look () {
       this.$router.push('/progress')
