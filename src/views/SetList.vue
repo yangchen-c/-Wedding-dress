@@ -2,7 +2,7 @@
   <div class="setList">
     <div class="card" @click="jump(item.id)" v-for="(item,i) in storeData" :key="i">
       <div class="img">
-        <img :src="item.classify.background" alt />
+        <img :src="item.cover" alt />
       </div>
       <div class="text">
         <span class="textt">{{item.name}}</span>
@@ -54,7 +54,11 @@ export default {
       axios
         .get('/combo', {
           params: {
-            id: this.$route.query.id
+            // id: this.$route.query.id
+            // classify: {
+            //   id: this.$route.query.id
+            // }
+            classify: this.$route.query.id
           },
           headers: { token: this.token }
         })
